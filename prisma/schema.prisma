@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator pothos {
+  provider = "prisma-pothos-types"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id             Int      @id @default(autoincrement())
+  email          String   @unique
+  username       String   @unique
+  hashedPassword String
+  name           String
+  birthday       DateTime
+  createdAt      DateTime @default(now())
+  isOnline       Boolean  @default(false)
+  posts          Post[]
+}
+
+model Post {
+  id          Int      @id @default(autoincrement())
+  title       String
+  content     String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  url         String
+  isPublished Boolean  @default(false)
+  author      User     @relation(fields: [authorId], references: [id])
+  authorId    Int
+}
