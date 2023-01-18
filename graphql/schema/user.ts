@@ -25,6 +25,7 @@ builder.queryFields((t) => ({
     },
     resolve: (query, root, args, ctx, info) => {
       return db.user.findUniqueOrThrow({
+        ...query,
         where: {
           id: args?.id,
         },
@@ -45,6 +46,7 @@ builder.mutationFields((t) => ({
     },
     resolve: (query, root, args, ctx, info) => {
       return db.user.create({
+        ...query,
         data: {
           name: args.name,
           email: args.email,

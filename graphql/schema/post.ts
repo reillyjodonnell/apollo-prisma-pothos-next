@@ -27,6 +27,7 @@ builder.queryFields((t) => ({
     resolve: async (query, root, args, ctx, info) => {
       const id = +args.id;
       return db.post.findUniqueOrThrow({
+        ...query,
         where: {
           id,
         },
@@ -47,6 +48,7 @@ builder.mutationFields((t) => ({
     },
     resolve: async (query, root, args, ctx, info) => {
       return db.post.create({
+        ...query,
         data: {
           title: args.title,
           content: args.content,
